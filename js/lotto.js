@@ -1,0 +1,107 @@
+
+(function () {
+    
+    
+    var btn = document.querySelector("#getNumbers"),
+        output = document.querySelector('#showNumbers');
+    
+    var table = document.querySelector("#myTable"),
+        ths = table.querySelectorAll("thead th"),
+        trs = table.querySelectorAll("tbody tr");
+    
+    
+    function getRandom(min, max) {
+        
+        return Math.round(Math.random() * (max - min + min));
+        
+    }
+    
+    function showRandomNumbers() {
+        
+        var numbers = [],
+            random;
+        
+        for (var i = 0; i < 6; i++) {
+            random = getRandom(1,49);
+            
+            while(numbers.indexOf(random) !== -1){
+                random = getRandom(1,49);
+            } 
+            
+            numbers.push(random);
+        }
+        
+        output.value = numbers.join(", ");
+    }
+     
+    btn.onclick = showRandomNumbers;
+    
+    
+    /* Sortowanie tablicy*/
+    
+    function makeArray(nodeList){
+        
+        var arr = [];
+        
+        for (var i = 0; i < nodeList.length; i++){
+            arr.push(nodeList[i]);
+        }
+        
+        return arr;
+    }
+    
+    function clearClassName(nodeList){
+        
+         for (var i = 0; i < nodeList.length; i++){
+            nodeList[i].className = "";
+        }
+    }
+    
+    function sortBy(e){
+    
+        var target = e.target,
+            thsArr = makeArray(ths),
+            trsArr = makeArray(trs),
+            index = thsArr.indexOf(target),
+            df = document.createDocumentFragment(),
+            order = (target.className === "" || target.className === "desc") ? "asc" : "desc";
+        
+        clearClassName(ths);
+        
+        trsArr.sort(function(a, b){
+           
+            var tdA = a.children[index].textContent,
+                tdB = b.children[index].textContent;
+            
+            if(tdA < tdB){
+                return order === "asc" ? -1 : 1;
+            } else if(tdA > tdB){
+                return order === "asc" ? 1 : -1;
+            } else{
+                return 0;
+            }  
+            
+            
+        });
+        
+        trsArr.forEach(function(tr){
+            df.appendChild(tr);
+        });
+        
+        target.className = order;
+        
+        table.querySelector("tbody").appendChild(df);
+        
+        console.log(trsArr);
+    }
+    
+    for (var i = 0; i < ths.length; i++) {
+    
+        ths[i].onclick = sortBy;
+    
+    }
+    
+    
+    
+    
+})();
