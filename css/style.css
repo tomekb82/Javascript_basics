@@ -5,6 +5,20 @@
     margin: 0;
 }
 
+
+nav ul{
+	list-style: none;
+	margin:10px;
+	padding:10px:
+}
+
+nav ul li{
+	padding:10px;
+	margin: 0px 20px 0 0;
+	display:inline;
+    font-size: 24px;
+}
+
 body {
     font: 14px/18px Tahoma, Arial, sans-serif;
 }
