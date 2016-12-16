@@ -132,6 +132,12 @@ table tr:nth-child(even) td {
     background-color: #F2F2F2;
 }
 
+
+tr.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
 /* formularze */
 ul.errors {
     width: 600px;
@@ -158,7 +164,8 @@ form * {
 form input[type="text"],
 form input[type="email"],
 select,
-textarea {
+textarea,
+input.szukaj{
     border: 1px #C5C5C5 solid;
     background: #fff;
 
@@ -174,13 +181,19 @@ textarea.error {
 }
 
 form input[type="text"],
-form input[type="email"] {
+form input[type="email"],
+input.szukaj{
     display: block;
     width: 200px;
     height: 35px;
     padding: 0 15px;
     margin: 0 20px 20px 0;
     float: left;
+}
+
+
+input.szukaj{
+    float: right;
 }
 
 form select {
