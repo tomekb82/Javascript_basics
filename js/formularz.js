@@ -4,7 +4,18 @@
     
     var form = document.querySelector("#myForm"),
         fields = form.querySelectorAll("[data-error]");
-        
+    
+function isNotEmpty(field){
+    return field.value !== "";
+}   
+    
+function isEmail(field){
+    return field.value.indexOf("@") !== -1;
+}    
+  
+function isAtLeast(field, min){
+    return field.value.length >= min;
+}   
     
 form.addEventListener("submit", function(e){
     
@@ -14,24 +25,23 @@ form.addEventListener("submit", function(e){
     
     for(var i =0; i < fields.length; i++){
     
-        var field = fields[i];
+        var field = fields[i],
+            isValid = false;
         
-        if(field.type === "text"){
-            if(field.value === ""){
-                errors.push(field.dataset.error);
-            }
+        if(field.type === "text" || field.type=== "select-one"){
+            isValid = isNotEmpty(field);
         }else if(field.type === "email"){
-            if(field.value.indexOf("@") === -1){
-                errors.push(field.dataset.error);
-            }
-        }else if(field.type=== "select-one"){
-            if(field.value === ""){
-                errors.push(field.dataset.error);
-            }
+            isValid = isEmail(field);
+        
         } else if(field.type === "textarea"){
-            if(field.value.length <3){
-                errors.push(field.dataset.error);
-            }
+            isValid = isAtLeast(field, 2);
+        }
+        
+        if(!isValid){
+            field.classList.add("error");
+            errors.push(field.dataset.error);
+        }else{
+            field.classList.remove("error");
         }
     }
     
