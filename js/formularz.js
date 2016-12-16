@@ -16,6 +16,32 @@ function isEmail(field){
 function isAtLeast(field, min){
     return field.value.length >= min;
 }   
+  
+function displayErrors(errors){
+    
+    
+    var ul = document.querySelector("ul.errors");
+    
+    if(!ul){
+        ul = document.createElement("ul");
+        
+        ul.classList.add("errors");
+    }
+    
+    ul.innerHTML = "";
+    
+    errors.forEach(function(error){
+        
+        var li = document.createElement("li");
+        
+        li.textContent = error;
+        
+        ul.appendChild(li);
+    });
+    
+    form.parentNode.insertBefore(ul,form);
+    
+}   
     
 form.addEventListener("submit", function(e){
     
@@ -43,6 +69,12 @@ form.addEventListener("submit", function(e){
         }else{
             field.classList.remove("error");
         }
+    }
+    
+    if(errors.length){
+        displayErrors(errors);
+    }else{
+        form.submit();
     }
     
     console.log(errors);
