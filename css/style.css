@@ -134,8 +134,9 @@ table tr:nth-child(even) td {
 
 
 tr.hidden {
-    opacity: 0;
-    visibility: hidden;
+    display: none;
+  //  opacity: 0;
+  //  visibility: hidden;
 }
 
 /* formularze */

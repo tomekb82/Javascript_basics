@@ -11,54 +11,44 @@
     
     szukaj.addEventListener("keydown", function(e){
     
-        var name = szukaj.value + e.key;
-        
-        var regex = RegExp(name + "+", "ig");
+        var name =  ( e.keyCode == 8 || e.keyCode == 46 ) ? 
+                szukaj.value.length > 0 ? szukaj.value.substr(0, szukaj.value.length-1) : ""
+                : szukaj.value + e.key;
       
+        var regex =  name.length > 0 ? RegExp("^" + name + "+", "") : "";
         
-        var trsArr = makeArray(trs),
-            df = document.createDocumentFragment();
-        
-        console.log(name);
+        var trsArr = makeArray(trs);
+         
         trsArr.forEach(function(tr){
             
-            tr.classList.remove("hidden");
             var td = tr.children[1].textContent;
-            if(name.slice(1) !== "Backspace" && /*regex.test(td)===false*/td !== name){
-                df.appendChild(tr);
+                  
+            if(name.length > 0 && regex.test(td)===false){
                 tr.classList.add("hidden");
+            }else{
+                tr.classList.remove("hidden");  
             }
-            df.appendChild(tr);
-        });
-        table.querySelector("tbody").appendChild(df);
+        });       
+        
     });
                             
     szukaj.addEventListener("keypress", function(e){
         
         var name = szukaj.value + e.key;
+        var regex = RegExp("^" + name + "+", "");
         
-        var regex = RegExp(name + "+", "ig");
-        
-        var trsArr = makeArray(trs),
-            df = document.createDocumentFragment();
-        
-        
+        var trsArr = makeArray(trs);
         
         trsArr.forEach(function(tr){
-          
-            tr.classList.remove("hidden");
+            
             var td = tr.children[1].textContent;
-            
-            console.log(regex.test(td));
-            
-            if(/*regex.test(td)==='false'*/td !== name){
-                df.appendChild(tr);
+                  
+            if(regex.test(td)===false){
                 tr.classList.add("hidden");
+            }else{
+                tr.classList.remove("hidden");  
             }
-            df.appendChild(tr);
-        });
-        table.querySelector("tbody").appendChild(df);
-        
+        });        
     });
 
     function makeArray(nodeList){
