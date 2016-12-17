@@ -8,7 +8,6 @@
         szukaj = document.querySelector("input.szukaj");
     
     
-    
     function createRows(actualValue){
         var regex = actualValue.length > 0 ? RegExp("^" + actualValue + "+", "") : "";
         //var trsArr = makeArray(trs);
@@ -59,12 +58,14 @@
         }
     }
     
+    
     function sortBy(e){
     
+      
         var target = e.target,
             thsArr = makeArray(ths),
-            //trsArr = makeArray(trs),
-            index = thsArr.indexOf(target),
+            trsArr = makeArray(trs),
+            index = /*thsArr.indexOf(target),*/Array.prototype.indexOf.call(ths,target),
             df = document.createDocumentFragment(),
             order = (target.className === "" || target.className === "desc") ? "asc" : "desc";
         
@@ -73,7 +74,9 @@
                 th.className = "";
         });
         
-        Array.prototype.sort.call(trs, function(a, b){
+        var that = this;
+        trsArr.sort(function(a, b){
+        //Array.prototype.sort.call(trs, function(a, b){
            
             var tdA = a.children[index].textContent,
                 tdB = b.children[index].textContent;
@@ -89,7 +92,11 @@
             
         });
         
-        Array.prototype.forEach.call(trs,(function(tr){
+        /*Array.prototype.forEach.call(trs,function(tr){
+            console.log(df);
+            df.appendChild(tr);
+        });*/
+        trsArr.forEach(function(tr){
             df.appendChild(tr);
         });
         
