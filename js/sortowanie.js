@@ -9,46 +9,36 @@
     
     
     
-    szukaj.addEventListener("keydown", function(e){
-    
-        var name =  ( e.keyCode == 8 || e.keyCode == 46 ) ? 
-                szukaj.value.length > 0 ? szukaj.value.substr(0, szukaj.value.length-1) : ""
-                : szukaj.value + e.key;
-      
-        var regex =  name.length > 0 ? RegExp("^" + name + "+", "") : "";
-        
+    function createRows(actualValue){
+        var regex = actualValue.length > 0 ? RegExp("^" + actualValue + "+", "") : "";
         var trsArr = makeArray(trs);
-         
+        
         trsArr.forEach(function(tr){
             
             var td = tr.children[1].textContent;
                   
-            if(name.length > 0 && regex.test(td)===false){
+            if(actualValue.length > 0 && regex.test(td)===false){
                 tr.classList.add("hidden");
             }else{
                 tr.classList.remove("hidden");  
             }
-        });       
+        });   
+    }
+    
+    szukaj.addEventListener("keydown", function(e){
         
+        var actualValue =  ( e.keyCode == 8 || e.keyCode == 46) ? 
+                szukaj.value.length > 0 ? szukaj.value.substr(0, szukaj.value.length-1) : ""
+                : szukaj.value + e.key;
+    
+        createRows(actualValue);        
     });
                             
     szukaj.addEventListener("keypress", function(e){
         
-        var name = szukaj.value + e.key;
-        var regex = RegExp("^" + name + "+", "");
-        
-        var trsArr = makeArray(trs);
-        
-        trsArr.forEach(function(tr){
-            
-            var td = tr.children[1].textContent;
-                  
-            if(regex.test(td)===false){
-                tr.classList.add("hidden");
-            }else{
-                tr.classList.remove("hidden");  
-            }
-        });        
+       var actualValue = szukaj.value + (e.keyCode == 13 ? "" : e.key);
+       
+        createRows(actualValue);   
     });
 
     function makeArray(nodeList){
