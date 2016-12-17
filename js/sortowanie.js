@@ -11,9 +11,9 @@
     
     function createRows(actualValue){
         var regex = actualValue.length > 0 ? RegExp("^" + actualValue + "+", "") : "";
-        var trsArr = makeArray(trs);
+        //var trsArr = makeArray(trs);
         
-        trsArr.forEach(function(tr){
+        Array.prototype.forEach.call(trs, function(tr){
             
             var td = tr.children[1].textContent;
                   
@@ -63,14 +63,17 @@
     
         var target = e.target,
             thsArr = makeArray(ths),
-            trsArr = makeArray(trs),
+            //trsArr = makeArray(trs),
             index = thsArr.indexOf(target),
             df = document.createDocumentFragment(),
             order = (target.className === "" || target.className === "desc") ? "asc" : "desc";
         
-        clearClassName(ths);
+        //clearClassName(ths);
+        Array.prototype.forEach.call(ths, function(th){
+                th.className = "";
+        });
         
-        trsArr.sort(function(a, b){
+        Array.prototype.sort.call(trs, function(a, b){
            
             var tdA = a.children[index].textContent,
                 tdB = b.children[index].textContent;
@@ -86,7 +89,7 @@
             
         });
         
-        trsArr.forEach(function(tr){
+        Array.prototype.forEach.call(trs,(function(tr){
             df.appendChild(tr);
         });
         
