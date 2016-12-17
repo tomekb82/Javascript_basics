@@ -9,6 +9,11 @@ function assignEvents(elems, type, event){
     }
 }
     
+function assignEvent(elem, type, event){
+    
+    elem.addEventListener(type, event, false);
+}    
+    
 function createTooltip(text, options){
     
     var tooltip = document.createElement("div");
@@ -50,8 +55,15 @@ function removeTooltip(e){
     
 function init(elems){
 
-    assignEvents(elems, "mouseenter", showTooltip);
-    assignEvents(elems, "mouseleave", removeTooltip);
+    /*assignEvents(elems, "mouseenter", showTooltip);
+    assignEvents(elems, "mouseleave", removeTooltip);*/
+    
+    Array.prototype.forEach.call(elems, function(elem){
+        assignEvent(elem, "mouseenter", showTooltip)
+    });
+    Array.prototype.forEach.call(elems, function(elem){
+        assignEvent(elem, "mouseleave", removeTooltip)
+    });
 }
     
 window.tOOltip = init;

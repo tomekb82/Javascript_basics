@@ -99,11 +99,8 @@
        
     }
     
-    for (var i = 0; i < ths.length; i++) {
-    
-        ths[i].onclick = sortBy;
-    
-    }
-    
+    Array.prototype.forEach.call(ths, function(th){
+        th.onclick = sortBy;  
+    });    
    
 })();
