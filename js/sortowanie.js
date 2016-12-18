@@ -52,27 +52,29 @@
     }
     
     function clearClassName(nodeList){
-        
-         for (var i = 0; i < nodeList.length; i++){
-            nodeList[i].className = "";
-        }
+    
+        [].forEach.call(nodeList, function(th){
+                th.className = "";
+        });
     }
     
+    function assignEvents(nodeList){
+        
+        [].forEach.call(nodeList, function(th){
+            th.onclick = sortBy;  
+        });
+    }
     
     function sortBy(e){
-    
-      
+     
         var target = e.target,
             thsArr = makeArray(ths),
             trsArr = makeArray(trs),
-            index = /*thsArr.indexOf(target),*/Array.prototype.indexOf.call(ths,target),
+            index = thsArr.indexOf(target),
             df = document.createDocumentFragment(),
             order = (target.className === "" || target.className === "desc") ? "asc" : "desc";
         
-        //clearClassName(ths);
-        Array.prototype.forEach.call(ths, function(th){
-                th.className = "";
-        });
+        clearClassName(ths);
         
         this.getIndex = function(){
             return index;
@@ -82,10 +84,11 @@
             return df;
         }
         
-        var that = this;
+        this.setDf = function(tr){
+            df.appendChild(tr);
+        }
+        
         trsArr.sort(function(a, b){
-        //Array.prototype.sort.call(this.getTrs(), function(a, b){
-              
             var tdA = a.children[index].textContent,
                 tdB = b.children[index].textContent;
             
@@ -95,27 +98,18 @@
                 return order === "asc" ? 1 : -1;
             } else{
                 return 0;
-            }  
-            
-
+            }          
         });
         
-        /*Array.prototype.forEach.call(trs,function(tr){
-            console.log(df);
-            df.appendChild(tr);
-        }));*/
         trsArr.forEach(function(tr){
             df.appendChild(tr);
         });
         
-        target.className = order;
-        
+        target.className = order;       
         table.querySelector("tbody").appendChild(df);
        
     }
     
-    Array.prototype.forEach.call(ths, function(th){
-        th.onclick = sortBy;  
-    });    
+    assignEvents(ths);    
    
 })();
