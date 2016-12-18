@@ -74,10 +74,18 @@
                 th.className = "";
         });
         
+        this.getIndex = function(){
+            return index;
+        }
+        
+        this.getDf = function(){
+            return df;
+        }
+        
         var that = this;
         trsArr.sort(function(a, b){
-        //Array.prototype.sort.call(trs, function(a, b){
-           
+        //Array.prototype.sort.call(this.getTrs(), function(a, b){
+              
             var tdA = a.children[index].textContent,
                 tdB = b.children[index].textContent;
             
@@ -89,13 +97,13 @@
                 return 0;
             }  
             
-            
+
         });
         
         /*Array.prototype.forEach.call(trs,function(tr){
             console.log(df);
             df.appendChild(tr);
-        });*/
+        }));*/
         trsArr.forEach(function(tr){
             df.appendChild(tr);
         });
