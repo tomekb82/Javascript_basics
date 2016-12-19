@@ -20,7 +20,9 @@ http.createServer(function(request, res) {
 // tell the server what kind of file is coming at it
     res.writeHead(200, {"Content-Type": "text/plain"});
 // make the server output a message
-    res.write("Welcome to the future of JavaScript2 .");
+
+console.log(request);    
+res.write(request.url); 
 // End the server interaction
     res.end();
 }).listen(3000);

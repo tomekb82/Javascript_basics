@@ -89,6 +89,8 @@
         }
         
         trsArr.sort(function(a, b){
+            
+            console.log("t");
             var tdA = a.children[index].textContent,
                 tdB = b.children[index].textContent;
             

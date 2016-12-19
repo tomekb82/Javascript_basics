@@ -12,13 +12,8 @@ function AJAX(config){
     
     this._assignEvents();
    
-    this._open();
-    this._assignUserHeaders();
-    
-    this._send();
-    
-    console.log(this._config);
-    
+    this._beforeSend();
+  
 }
 
 AJAX.prototype._extendsOptions = function(config){
@@ -27,11 +22,12 @@ AJAX.prototype._extendsOptions = function(config){
      
     for(var key in defaultConfig){
         if(key in config){
-            defaultConfig[key] = config[key];
+            continue;
         }
+        config[key] = defaultConfig[key];
     }
     
-    return defaultConfig;
+    return config;
 };
 
 AJAX.prototype._defaultConfig = {
@@ -80,27 +76,80 @@ AJAX.prototype._open = function(e){
     
 };
 
-AJAX.prototype._send = function(e){
+AJAX.prototype._beforeSend = function(){
 
-    this._xhr.send();
+    var isData = Object.keys(this._config.data).length > 0,
+        data = null;
+    
+    if(this._config.type.toUpperCase() === "POST" && isData){
+        data = this._serializeFormData(this._config.data);
+    }else if(this._config.type.toUpperCase() === "GET" && isData){
+        this._config.url += "?" + this._serializeData(this._config.data);
+    }
+    
+    this._open();
+    this._assignUserHeaders();
+    this._send(data);
+}
+
+AJAX.prototype._send = function(data){
+
+    this._xhr.send(data);
 }
 
 AJAX.prototype._handleReponse = function(e){
 
     if(this._xhr.readyState === 4 && this._xhr.status === 200){
-        console.log("Otrzymano odpowiedź");
-        console.log(this._xhr.response);
+        if(typeof this._config.success === "function"){
+            this._config.success(this._xhr.response, this._xhr);
+        }
+    } else if(this._xhr.readyState === 4 && this._xhr.status === 404){
+      this._handleError();
     }
 };
 
+AJAX.prototype._serializeData= function(data){
+
+    var serialized = "";
+    
+    for(var key in data){
+        serialized += key + "=" + encodeURIComponent(data[key]) + "&";
+    }
+    
+    return serialized.slice(0, serialized.length-1);
+}
+
+AJAX.prototype._serializeFormData= function(data){
+    
+    var serialized = new FormData();
+    
+    for(var key in data){
+        serialized.append(key, data[key]);
+    }
+    
+    return serialized;
+};
+
+
 AJAX.prototype._handleError= function(e){
     
+    if(typeof this._config.failure === "function"){
+        this._config.failure(this._xhr);
+    }
 };
 
 var a = AJAX({
-  //  type: "POST",
+    type: "POST",
     url: "http://localhost:3000",
     data: {
-        firstName : "ala"
+        firstName : "ala",
+        lastname: "kowalski nowak"
+    },
+    success: function(reponse, xhr){
+        console.log("Udalo sie polaczyc");
+        console.log(reponse);
+    },
+    failure: function(xhr){
+        console.log("wystpi blad: " + xhr.status);
     }
 });
