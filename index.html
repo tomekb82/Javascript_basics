@@ -16,6 +16,7 @@
                 <li><a href="#formularz">Walidacja formularza</a></li>
                 <li><a href="#lotto">Lotto</a></li>
                 <li><a href="#sortowanie">Sortowanie tabeli</a></li>
+                <li><a href="#formularz_ajax">Formularz ajax</a></li>
             </ul>
         </nav>
         
@@ -131,6 +132,30 @@
         </table>
 
     </section>
+        
+    <section id="formularz_ajax">
+        <h1>Wysyłanie maila z AJAX</h1>
+
+        <div id="message"></div>
+
+        <form class="ajax" id="formAjax" action="http://localhost:3000" method="POST">
+            <div class="inputField">
+                <input type="text" name="your-name" placeholder="Twoje imię">
+            </div>
+
+            <div class="inputField">
+                <input type="text" name="your-email" placeholder="Twój e-mail">
+            </div>
+
+            <div class="inputField">
+                <textarea name="your-message" placeholder="Twoja wiadomość"></textarea>
+            </div>
+
+            <div class="inputField">
+                <button type="submit">Wyślij</button>
+            </div>
+        </form>    
+    </section>
     </div>
 
 <script src="js/main.js"></script>
@@ -140,6 +165,7 @@
 <script src="js/powrotDoGory.js"></script>
 <script src="js/tooltip.js"></script>
 <script src="js/ajax.js"></script>
+<script src="js/formularz_ajax.js"></script>
 <script>
     tOOltip(document.querySelectorAll("[title]"));
 </script>    

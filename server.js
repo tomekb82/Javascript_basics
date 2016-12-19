@@ -1,7 +1,7 @@
 // include the http module you need
 var http = require("http");
 // access the createServer method in the http object
-http.createServer(function(request, res) {
+http.createServer(function(req, res) {
 
  // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -16,13 +16,34 @@ http.createServer(function(request, res) {
     // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
 
+console.log(req.method);
+var data;
 
-// tell the server what kind of file is coming at it
-    res.writeHead(200, {"Content-Type": "text/plain"});
-// make the server output a message
+if (req.method == 'POST') {
+    console.log("[200] " + req.method + " to " + req.url);
 
-console.log(request);    
-res.write(request.url); 
-// End the server interaction
-    res.end();
+      
+    req.on('data', function(chunk) {
+      console.log("Received body data:");
+      console.log(chunk.toString());
+      data = chunk.toString();	
+    });
+    
+    req.on('end', function() {
+      // empty 200 OK response for now
+      console.log(data);
+
+      res.writeHead(200, "OK", {'Content-Type': 'application/json'});
+      res.write(data);
+      res.end();
+    });
+    
+  } else {
+    console.log("[405] " + req.method + " to " + req.url);
+    res.writeHead(405, "Method not supported", {'Content-Type': 'text/html'});
+    res.end('<html><head><title>405 - Method not supported</title></head><body><h1>Method not supported.</h1></body></html>');
+  }
+
+
+
 }).listen(3000);

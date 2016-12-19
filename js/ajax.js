@@ -72,6 +72,8 @@ AJAX.prototype._open = function(e){
         this._config.options.password
     );
     
+  //  this._xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    
     this._xhr.timeout = this._config.options.timeout;
     
 };
@@ -99,11 +101,11 @@ AJAX.prototype._send = function(data){
 
 AJAX.prototype._handleReponse = function(e){
 
-    if(this._xhr.readyState === 4 && this._xhr.status === 200){
+    if(this._xhr.readyState === 4 && this._xhr.status >= 200 && this._xhr.status < 400){
         if(typeof this._config.success === "function"){
             this._config.success(this._xhr.response, this._xhr);
         }
-    } else if(this._xhr.readyState === 4 && this._xhr.status === 404){
+    } else if(this._xhr.readyState === 4 && this._xhr.status >= 400){
       this._handleError();
     }
 };
@@ -138,7 +140,7 @@ AJAX.prototype._handleError= function(e){
     }
 };
 
-var a = AJAX({
+/*var a = AJAX({
     type: "POST",
     url: "http://localhost:3000",
     data: {
@@ -152,4 +154,4 @@ var a = AJAX({
     failure: function(xhr){
         console.log("wystpi blad: " + xhr.status);
     }
-});
+});*/
