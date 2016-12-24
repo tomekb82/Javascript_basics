@@ -17,6 +17,7 @@
                 <li><a href="#lotto">Lotto</a></li>
                 <li><a href="#sortowanie">Sortowanie tabeli</a></li>
                 <li><a href="#formularz_ajax">Formularz ajax</a></li>
+                <li><a href="#jsonp">JSONP</a></li>
             </ul>
         </nav>
         
@@ -133,6 +134,19 @@
 
     </section>
         
+    <section id="regex">
+        
+        <h1>Regex</h1>
+        
+        <div class="regex">
+            <textarea name="regexMessage" placeholder="Twoja wiadomość"></textarea>
+        </div>
+
+        <div class="regex">
+            <button type="submit">Wyślij</button>
+        </div>
+    </section>    
+        
     <section id="formularz_ajax">
         <h1>Wysyłanie maila z AJAX</h1>
 
@@ -156,6 +170,13 @@
             </div>
         </form>    
     </section>
+        
+    <section id="jsonp">
+        <h1>JSONP</h1>
+        
+        <button id="loadData" class="btn jsonp">Wczytaj dane</button>
+        
+    </section>
     </div>
 
 <script src="js/main.js"></script>
@@ -166,6 +187,8 @@
 <script src="js/tooltip.js"></script>
 <script src="js/ajax.js"></script>
 <script src="js/formularz_ajax.js"></script>
+<script src="js/jsonp.js"></script>
+<script src="js/regex.js"></script>
 <script>
     tOOltip(document.querySelectorAll("[title]"));
 </script>    
